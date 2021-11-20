@@ -1,7 +1,7 @@
 import argparse  # pragma: no cover
 import enum
 
-from . import BaseClass, base_echo_server, base_echo_client
+from . import BaseClass, base_echo_server, base_echo_client, httpClient, httpServer
 
 # https://stackoverflow.com/a/60750535
 class EnumAction(argparse.Action):
@@ -80,11 +80,12 @@ def main() -> None: # pragma: no cover
 
     print("Executing main function")
     if args.type == ServerType.Client:
-        base_echo_client()
+        httpClient()
     elif args.type == ServerType.Server:
-        base_echo_server()
+        httpServer()
     else:
         raise Exception(args.type + " is not handled.")
+
     print("End of main function")
 
 
