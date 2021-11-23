@@ -6,11 +6,15 @@ import json
 import threading
 import time
 
-def httpClient(sensor):
-    msg = json.dumps({'sensor':sensor})
+otherData = {}
+def httpClient(lastRequest):
+    msg = json.dumps({'lastRequest':lastRequest})
     r = requests.post('http://localhost:8000', data = msg)
     print(r.status_code)
     print(r.json())
+    global otherData
+    otherData = storeData(otherData,r.json())
+    print(otherData)
 
 
 class Handler(http.BaseHTTPRequestHandler):
@@ -36,9 +40,17 @@ class Handler(http.BaseHTTPRequestHandler):
         msg = self.rfile.read(length)
         print(msg)
         msg = json.loads(msg)
-        requestSensor = msg['sensor']
+        requestLast = msg['lastRequest']
         global data
-        msg = data[requestSensor]
+        msg = {}
+        for i in data:
+            temp_list = []
+            for j in data[i]:
+                if j['timestamp'] > requestLast:
+                    temp_list.append(j)
+            msg[i] = temp_list
+        # print(data)
+        # msg = data[requestLast]
         # process message ...
         msg = json.dumps(msg)
         msg = bytes(msg, 'utf-8')
@@ -114,6 +126,14 @@ def sensor_light(sleep):
         lock.release()
         time.sleep(sleep)
 
+
+def storeData(collected, new):
+    for i in new:
+        if i in collected:
+            collected[i].extend(new[i])
+        else:
+            collected[i] = new[i]
+    return collected
 
 if __name__=='__main__':
     t1 = threading.Thread(target=sensor_temp,args=(1,))

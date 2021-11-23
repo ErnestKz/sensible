@@ -80,7 +80,7 @@ def main() -> None: # pragma: no cover
 
     print("Executing main function")
     if args.type == ServerType.Client:
-        httpClient('human')
+        httpClient(1637675890)
     elif args.type == ServerType.Server:
         httpServer()
     else:
