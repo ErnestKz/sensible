@@ -3,7 +3,8 @@ from time import sleep
 
 from sensible.client import runClient 
 from sensible.server import runServer 
-from sensible.sensors import runSensors 
+from sensible.sensors import runSensors
+from sensible.interactive_interface import getInterface
 
 def createVariables():
     lock = threading.Lock()
@@ -14,12 +15,16 @@ def createVariables():
     serverLog = []
     return (lock, data, otherData, clientLog, serverLog)
 
-def runNode() -> None:
+def runNode(port):
     (lock, data, otherData, clientLog, serverLog) = createVariables()
     runSensors(lock, data)
     runClient(lock, otherData, clientLog)
-    runServer(lock, data, serverLog)
-    while True:
-        print("serverLog:", serverLog)
-        print("clientLog:", clientLog)
-        sleep(2)
+    runServer(lock, data, serverLog, port)
+    return getInterface(lock, data, otherData, clientLog, serverLog, port)
+    
+    # while True:
+    #     print("serverLog:", serverLog)
+    #     print("clientLog:", clientLog)
+
+    #     print("requestedData:", otherData)
+    #     sleep(2)

@@ -2,14 +2,22 @@ import argparse
 import time
 
 from . import runNode
+from sensible.interactive_interface import runBaseInterface
 
 def main() -> None: 
     parser = argparse.ArgumentParser(description="sensible.", epilog="Enjoy the sensible functionality!")
     args = parser.parse_args()
+
+    basePort = 8000
+    numNodes = 3
+    piShells = {}
     
-    runNode()
-    while True:
-        time.sleep(1)
+    for n in range(numNodes):
+        piPort = basePort + n
+        piShell = runNode(piPort)
+        piShells[piPort] = piShell
+        
+    runBaseInterface(piShells)
         
 if __name__ == "__main__":
     main()

@@ -4,11 +4,11 @@ import json
 import threading
 import time
 
-def runServer(lock, data, serverLog):
-    threading.Thread(target=httpServer, args = (lock, data, serverLog)).start()
+def runServer(lock, data, serverLog, port):
+    threading.Thread(target=httpServer, args = (lock, data, serverLog, port)).start()
 
-def httpServer(lock, data, serverLog):
-    server_address = ('', 8000)
+def httpServer(lock, data, serverLog, port):
+    server_address = ('', port)
     server_class=http.HTTPServer
     httpd = server_class(server_address, createHandler(lock, data, serverLog))
     httpd.serve_forever()
@@ -19,6 +19,9 @@ def createHandler(lock, data, serverLog):
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
+
+        def log_message(self, format, *args):
+            return
         
         def do_POST(self):
             self._set_headers()
