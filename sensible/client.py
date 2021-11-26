@@ -3,7 +3,7 @@ import time
 import json
 import threading
 
-def runClient(lock, otherData, clientLog):
+def runClient(lock, otherData, clientLog, **kwargs):
     threading.Thread(target=clientLoop, args=(lock, otherData, clientLog)).start()
 
 def clientLoop(lock, otherData, clientLog):

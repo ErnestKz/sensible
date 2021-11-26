@@ -3,21 +3,31 @@ import time
 
 from . import runNode
 from sensible.interactive_interface import runBaseInterface
+from sensible.node import createConfig
+
+# read in arguments with argParss
+# runNode to take a list of ports 
+# create ctx object for each virtual device
+# create cfg object for each virtual device
 
 def main() -> None: 
     parser = argparse.ArgumentParser(description="sensible.", epilog="Enjoy the sensible functionality!")
     args = parser.parse_args()
-
     basePort = 8000
     numNodes = 3
-    piShells = {}
+    addresses = []
     
+    virtualDevices = {}
     for n in range(numNodes):
-        piPort = basePort + n
-        piShell = runNode(piPort)
-        piShells[piPort] = piShell
+        devicePort = basePort + n
+        deviceConfig = createConfig(devicePort, addresses)
+        deviceState = runNode(deviceConfig)
         
-    runBaseInterface(piShells)
+        virtualDevices[devicePort] = { "config": deviceConfig,
+                                       "state": deviceState
+                                      }
+        
+    runBaseInterface(virtualDevices)
         
 if __name__ == "__main__":
     main()

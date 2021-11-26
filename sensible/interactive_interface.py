@@ -2,8 +2,8 @@ import os
 import time
 import threading
 
-def runBaseInterface(piShells):
-    devicesString = "Virtual devices running on ports: " + str(list(piShells.keys()))
+def runBaseInterface(virtualDevices):
+    devicesString = "Virtual devices running on ports: " + str(list(virtualDevices.keys()))
     print(devicesString)
     while True:
         i = input(f"(BASE) >> ")
@@ -11,15 +11,17 @@ def runBaseInterface(piShells):
             os.system('clear')
         if "device " in i:
             port = int(i[len("device "):])
-            if port in piShells.keys():
+            if port in virtualDevices.keys():
+                device = virtualDevices[port]
+                config, state = device["config"], device["state"]
                 print("Entering shell of virtual device of port: ", port)
-                piShells[port]()
+                getInterface(**config, **state)()
             else:
                 print("Virtual device does not exist on port: ", port)
         if "devices" == i:
             print(devicesString)
 
-def getInterface(lock, data, otherData, clientLog, serverLog, port):
+def getInterface(lock, data, otherData, clientLog, serverLog, port, **kwargs):
     def runInterface():
         # threading.Thread(target=runStats, args=(data, otherData, clientLog, serverLog)).start()
         while True:

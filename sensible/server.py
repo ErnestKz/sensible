@@ -4,7 +4,7 @@ import json
 import threading
 import time
 
-def runServer(lock, data, serverLog, port):
+def runServer(lock, data, serverLog, port, **kwargs):
     threading.Thread(target=httpServer, args = (lock, data, serverLog, port)).start()
 
 def httpServer(lock, data, serverLog, port):

@@ -2,7 +2,7 @@ import threading
 import random
 import time
 
-def runSensors(lock, data):
+def runSensors(lock, data, **kwargs):
     threading.Thread(target=sensor_temp,args=(1, lock, data)).start()
     # threading.Thread(target=sensor_motion,args=(2,)).start()
     # threading.Thread(target=sensor_human,args=(1.5,)).start()
