@@ -3,17 +3,15 @@ import time
 import json
 import threading
 
-def runClient(lock, otherData, clientLog, **kwargs):
-    threading.Thread(target=clientLoop, args=(lock, otherData, clientLog)).start()
+def runClient(lock, otherData, clientLog, addresses, **kwargs):
+    threading.Thread(target=clientLoop, args=(lock, otherData, clientLog, addresses)).start()
 
-def clientLoop(lock, otherData, clientLog):
-    peers = [("localhost", 8000), ("localhost", 8001), ("timeout.org", 8001)]
-    peerAddresses = list(map(createUrl, peers))
-    peersLastRequested = {}
+def clientLoop(lock, otherData, clientLog, addresses):
     
+    peersLastRequested = {}
     while True:
         # Can try put each of these requests in a separate thread.
-        for peer in peerAddresses:
+        for peer in addresses:
             try:
                 timePreviousRequest = peersLastRequested[peer] if peer in peersLastRequested.keys() else 0
                 msg = { "lastRequest": timePreviousRequest }
@@ -39,6 +37,4 @@ def storeData(collected, new):
             collected[i] = new[i]
     return collected        
         
-def createUrl(dst):
-    (addr, port) = dst
-    return f'http://{addr}:{port}'
+

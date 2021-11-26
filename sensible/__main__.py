@@ -6,16 +6,16 @@ from sensible.interactive_interface import runBaseInterface
 from sensible.node import createConfig
 
 # read in arguments with argParss
-# runNode to take a list of ports 
-# create ctx object for each virtual device
-# create cfg object for each virtual device
 
 def main() -> None: 
     parser = argparse.ArgumentParser(description="sensible.", epilog="Enjoy the sensible functionality!")
     args = parser.parse_args()
+    
     basePort = 8000
     numNodes = 3
-    addresses = []
+    peers = [("localhost", 8000), ("localhost", 8001), ("timeout.org", 8001)]
+    
+    addresses = list(map(lambda p: f'http://{p[0]}:{p[1]}', peers))
     
     virtualDevices = {}
     for n in range(numNodes):
