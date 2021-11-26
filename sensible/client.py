@@ -1,37 +1,43 @@
 import requests
 import time
 import json
+import threading
 
-peers = [("localhost", 8000), ("localhost", 8001), ("timeout.org", 8001)]
+def runClient(lock, otherData, clientLog):
+    threading.Thread(target=clientLoop, args=(lock, otherData, clientLog)).start()
 
-sample_msg = {
-    "id": "superid",
-    "data": {
-        "fruit": "apple",
-        "veg": "carrot"
-    }
-}
-
-def httpClient():
-    msg = json.dumps(sample_dataset)
-    r = requests.post('http://localhost:8000', data = msg)
-    print(r.status_code)
-    print(r.json())
+def clientLoop(lock, otherData, clientLog):
+    peers = [("localhost", 8000), ("localhost", 8001), ("timeout.org", 8001)]
+    peerAddresses = list(map(createUrl, peers))
+    peersLastRequested = {}
     
-def clientLoop():
     while True:
         # Can try put each of these requests in a separate thread.
-        for peer in peers:
-            url = createUrl(peer)
+        for peer in peerAddresses:
             try:
-                msg = json.dumps(sample_msg)
-                r = requests.post(url, data=msg, timeout=2)
-                print("Sent to", peer, "status code", r.status_code)
-                print(r.json())
-            except requests.exceptions.RequestException as e:  # This is the correct syntax
-                print("Connection failed to:", url)
+                timePreviousRequest = peersLastRequested[peer] if peer in peersLastRequested.keys() else 0
+                msg = { "lastRequest": timePreviousRequest }
+                msg = json.dumps(msg)
                 
+                # perhaps a lock here
+                timeCurrentRequest = time.time()
+                r = requests.post(peer, data=msg, timeout=2)
+                
+                clientLog.append(f'Sent to: {peer}, code {r.status_code}')
+                
+                otherData = storeData(otherData, r.json())
+                peersLastRequested[peer] = timeCurrentRequest
+            except requests.exceptions.RequestException as e:
+                clientLog.append(f'Connection failed to: {peer}')
         time.sleep(2)
+
+def storeData(collected, new):
+    for i in new:
+        if i in collected:
+            collected[i].extend(new[i])
+        else:
+            collected[i] = new[i]
+    return collected        
         
 def createUrl(dst):
     (addr, port) = dst
