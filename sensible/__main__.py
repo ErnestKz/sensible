@@ -4,6 +4,7 @@ import time
 from . import runNode
 from sensible.interactive_interface import runBaseInterface
 from sensible.node import createConfig
+from sensible.sensors import virtual_sensors
 
 # read in arguments with argParss
 
@@ -16,13 +17,14 @@ def main() -> None:
     peers = [("localhost", 8000), ("localhost", 8001), ("timeout.org", 8001)]
     
     addresses = list(map(lambda p: f'http://{p[0]}:{p[1]}', peers))
-
-    sensorType = [['temperature','motion','human','lightLevel'],['humidity','gasLevel','PM2.5','carbonDioxide'],['waterTemperature','doorState','windowState','windSpeed']]
     
     virtualDevices = {}
     for n in range(numNodes):
         devicePort = basePort + n
-        deviceConfig = createConfig(devicePort, addresses, sensorType[n])
+
+        deviceConfig = createConfig(devicePort, addresses, [virtual_sensors[n],
+                                                            virtual_sensors[n+1],
+                                                            virtual_sensors[n+2]])
         deviceState = runNode(deviceConfig)
         
         virtualDevices[devicePort] = { "config": deviceConfig,

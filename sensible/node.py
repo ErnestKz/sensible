@@ -13,10 +13,13 @@ def createVariables():
              "serverLog": [],}
     return state
 
-def createConfig(port, addresses, sensorType):
+def createConfig(port, addresses, sensor_procedures):
     config = {"port": port,
               "addresses": addresses,
-              "sensorType": sensorType}
+              "sensor_procedures": sensor_procedures}
+    # A sensor procedure is a function takes in two arguments
+    # the thread lock,
+    # and a data array to append sensor values to 
     return config
 
 def runNode(config):
