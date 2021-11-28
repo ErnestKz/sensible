@@ -23,18 +23,21 @@ def clientLoop(lock, otherData, clientLog, addresses):
                 
                 clientLog.append(f'Sent to: {peer}, code {r.status_code}')
                 
-                otherData = storeData(otherData, r.json())
+                otherData = storeData(peer, otherData, r.json())
                 peersLastRequested[peer] = timeCurrentRequest
             except requests.exceptions.RequestException as e:
                 clientLog.append(f'Connection failed to: {peer}')
         time.sleep(2)
 
-def storeData(collected, new):
+def storeData(peer, collected, new):
+    if peer not in collected:
+        collected[peer] = {}
+
     for i in new:
-        if i in collected:
-            collected[i].extend(new[i])
+        if i in collected[peer]:
+            collected[peer][i].extend(new[i])
         else:
-            collected[i] = new[i]
+            collected[peer][i] = new[i]
     return collected        
         
 

@@ -13,9 +13,10 @@ def createVariables():
              "serverLog": [],}
     return state
 
-def createConfig(port, addresses):
+def createConfig(port, addresses, sensorType):
     config = {"port": port,
-              "addresses": addresses}
+              "addresses": addresses,
+              "sensorType": sensorType}
     return config
 
 def runNode(config):

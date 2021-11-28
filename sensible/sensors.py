@@ -2,23 +2,37 @@ import threading
 import random
 import time
 
-def runSensors(lock, data, **kwargs):
-    threading.Thread(target=sensor_temp,args=(1, lock, data)).start()
+def runSensors(lock, data, sensorType, **kwargs):
+    for sensor in sensorType:
+        threading.Thread(target=create_sensor_data,args=(random.uniform(1,3), lock, data, sensor)).start()
     # threading.Thread(target=sensor_motion,args=(2,)).start()
     # threading.Thread(target=sensor_human,args=(1.5,)).start()
     # threading.Thread(target=sensor_light, args=(2,)).start()
 
-def sensor_temp(sleep, lock, data):
+possible_humans = ["John", "Alex", "Mary", "Vasya", "Unknwon"]
+def create_sensor_data(sleep, lock, data, sensor):
     while True:
         lock.acquire()
         temp_dic = {}
-        temp = random.randint(7,23)
-        temp_dic['data'] = temp
+        randomData = {"temperature": random.randint(7,23),
+                      "motion": random.getrandbits(1),
+                      "human": random.sample(possible_humans, random.randint(0, 2)),
+                      "lightLevel": random.uniform(0.00001,100000),
+                      "humidity": random.randint(30,80), # %
+                      "gasLevel": random.randint(0,100), # %
+                      "PM2.5": random.randint(0,250), # μg/m³
+                      "carbonDioxide": random.randint(0,2000), # ppm
+                      "waterTemperature": random.randint(0,100),
+                      "doorState": random.getrandbits(1),
+                      "windowState": random.getrandbits(1),
+                      "windSpeed": random.uniform(0,50) # m/s
+                      }
+        temp_dic['data'] = randomData.get(sensor)
         temp_dic['timestamp'] = time.time()
-        if 'temperature' in data.keys():
-            data['temperature'].append(temp_dic)
+        if sensor in data.keys():
+            data[sensor].append(temp_dic)
         else:
-            data['temperature'] = [temp_dic]
+            data[sensor] = [temp_dic]
         lock.release()
         time.sleep(sleep)
 
