@@ -12,7 +12,8 @@ def main() -> None:
     args = parser.parse_args()
     print(args.mode)
     # modes are: pi25, pi26, and virtual
-
+    
+    virtualDevices = {}
     if (args.mode == "virtual"):
         basePort = 8000
         numNodes = 3
@@ -23,7 +24,7 @@ def main() -> None:
         peers = [peers1, peers2, peers3]
         toAddress = lambda l : list(map(lambda p: f'http://{p[0]}:{p[1]}', l))
         addresses = list(map(toAddress, peers))
-        virtualDevices = {}
+        
         for n in range(numNodes):
             devicePort = basePort + n
             i = (n*3)
