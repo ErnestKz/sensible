@@ -1,6 +1,7 @@
 import os
 import time
 import threading
+from pprint import pprint
 
 def runBaseInterface(virtualDevices):
     devicesString = "Virtual devices running on ports: " + str(list(virtualDevices.keys()))
@@ -23,16 +24,33 @@ def runBaseInterface(virtualDevices):
 
 def getInterface(lock, data, otherData, clientLog, serverLog, port, **kwargs):
     def runInterface():
-        # threading.Thread(target=runStats, args=(data, otherData, clientLog, serverLog)).start()
         while True:
             i = input(f"(DEVICE:{port}) >> ")
             if i == "clear":
                 os.system('clear')
             if i == "all":
                 displayStats(data, otherData, clientLog, serverLog)
+            if i == "received_data":
+                pprint(otherData)
+            if i == "received_summary":
+                createSummaryReceivedData(otherData)
+            if i == "sensed_data":
+                pprint(data)
+            if i == "sensed_summary":
+                createSummarySensedData(data)
             if i == "exit":
                 break
     return runInterface
+
+def createSummaryReceivedData(otherData):
+    for peer, sensor_data in otherData.items(): 
+        print(peer)
+        for sensor_name, sensed_data in sensor_data.items(): 
+            print("\t", sensor_name, ":", len(sensed_data))
+            
+def createSummarySensedData(data):
+    for sensor_name, sensed_data in data.items(): 
+            print(sensor_name, ":", len(sensed_data))
 
 def displayStats(data, otherData, clientLog, serverLog):
     print("data:", data)
