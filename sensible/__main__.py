@@ -47,8 +47,8 @@ def main() -> None:
             peers = [pi26]
             sensors = [virtual_sensors[0],
                        virtual_sensors[1],
-                       real_temp_sensor
-                       # virtual_sensors[2]
+                       # real_temp_sensor
+                       virtual_sensors[2]
                        ]
         elif (args.mode == "pi26"):
             peers = [pi25]
