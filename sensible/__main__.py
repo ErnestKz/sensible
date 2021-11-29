@@ -50,8 +50,8 @@ def main() -> None:
             
         deviceConfig = createConfig(port, peers, sensors)
         deviceState = runNode(deviceConfig)
-        virtualDevices[devicePort] = { "config": deviceConfig,
-                                       "state": deviceState }
+        virtualDevices[port] = { "config": deviceConfig,
+                                 "state": deviceState }
         runBaseInterface(virtualDevices)
             
         
