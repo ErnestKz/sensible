@@ -7,8 +7,10 @@ def runClient(lock, otherData, clientLog, addresses, **kwargs):
     threading.Thread(target=clientLoop, args=(lock, otherData, clientLog, addresses)).start()
 
 def clientLoop(lock, otherData, clientLog, addresses):
-    
     peersLastRequested = {}
+    
+    session = requests.Session()
+    session.trust_env = False
     while True:
         # Can try put each of these requests in a separate thread.
         for peer in addresses:
@@ -18,8 +20,13 @@ def clientLoop(lock, otherData, clientLog, addresses):
                 msg = json.dumps(msg)
                 
                 # perhaps a lock here
+
+                
+        
                 timeCurrentRequest = time.time()
-                r = requests.post(peer, data=msg, timeout=2)
+                
+                # r = session.prepare_request(requests.Request('POST', peer, data=msg, timeout=2))
+                r = session.post(peer, data=msg, timeout=2)
                 
                 clientLog.append(f'Sent to: {peer}, code {r.status_code}')
                 
