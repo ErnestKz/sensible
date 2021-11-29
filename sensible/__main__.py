@@ -38,8 +38,8 @@ def main() -> None:
     else:
         toAddress = lambda p: f'http://{p[0]}:{p[1]}'
         port = 8009
-        pi25 = toAddress(("rasp-025.berry.scss.tcd.ie ", port))
-        pi26 = toAddress(("rasp-026.berry.scss.tcd.ie ", port))
+        pi25 = toAddress(("rasp-025.berry.scss.tcd.ie", port))
+        pi26 = toAddress(("rasp-026.berry.scss.tcd.ie", port))
         
         if (args.mode == "pi25"):
             peers = [pi26]
