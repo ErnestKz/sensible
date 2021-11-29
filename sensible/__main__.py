@@ -8,10 +8,17 @@ from sensible.sensors import virtual_sensors
 
 # read in arguments with argParss
 
+
+pi25 = ("rasp-025.berry.scss.tcd.ie ", 8006)
+pi25 = ("rasp-026.berry.scss.tcd.ie ", 8006)
+
 def main() -> None: 
-    parser = argparse.ArgumentParser(description="sensible.", epilog="Enjoy the sensible functionality!")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("mode", type=str)
     args = parser.parse_args()
-    
+    print(args.mode)
+    # modes are: pi25, pi26, and virtual
+
     basePort = 8000
     numNodes = 3
     # peers = [("localhost", 8000), ("localhost", 8001), ("timeout.org", 8001)]
