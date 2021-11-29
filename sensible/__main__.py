@@ -6,6 +6,8 @@ from sensible.interactive_interface import runBaseInterface
 from sensible.node import createConfig
 from sensible.sensors import virtual_sensors
 
+from sensible.real_sensor import real_temp_sensor
+
 def main() -> None: 
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", type=str)
@@ -43,7 +45,11 @@ def main() -> None:
         
         if (args.mode == "pi25"):
             peers = [pi26]
-            sensors = [virtual_sensors[0], virtual_sensors[1], virtual_sensors[2]]
+            sensors = [virtual_sensors[0],
+                       virtual_sensors[1],
+                       real_temp_sensor
+                       # virtual_sensors[2]
+                       ]
         elif (args.mode == "pi26"):
             peers = [pi25]
             sensors = [virtual_sensors[3], virtual_sensors[4], virtual_sensors[5]]
