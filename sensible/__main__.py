@@ -37,7 +37,7 @@ def main() -> None:
         runBaseInterface(virtualDevices)
     else:
         toAddress = lambda p: f'http://{p[0]}:{p[1]}'
-        port = 8009
+        port = 33001
         pi25 = toAddress(("rasp-025.berry.scss.tcd.ie", port))
         pi26 = toAddress(("rasp-026.berry.scss.tcd.ie", port))
         
