@@ -2,11 +2,12 @@ import requests
 import time
 import json
 import threading
+from sensible.database import insertOtherData
 
-def runClient(lock, otherData, clientLog, addresses, **kwargs):
-    threading.Thread(target=clientLoop, args=(lock, otherData, clientLog, addresses)).start()
+def runClient(lock, otherData, clientLog, deviceAddress, addresses, **kwargs):
+    threading.Thread(target=clientLoop, args=(lock, otherData, clientLog, deviceAddress, addresses)).start()
 
-def clientLoop(lock, otherData, clientLog, addresses):
+def clientLoop(lock, otherData, clientLog, deviceAddress, addresses):
     peersLastRequested = {}
     
     session = requests.Session()
@@ -30,13 +31,13 @@ def clientLoop(lock, otherData, clientLog, addresses):
                 
                 clientLog.append(f'Sent to: {peer}, code {r.status_code}')
                 
-                otherData = storeData(peer, otherData, r.json())
+                otherData = storeData(deviceAddress, peer, otherData, r.json())
                 peersLastRequested[peer] = timeCurrentRequest
             except requests.exceptions.RequestException as e:
                 clientLog.append(f'Connection failed to: {peer}')
         time.sleep(2)
 
-def storeData(peer, collected, new):
+def storeData(deviceAddress, peer, collected, new):
     if peer not in collected:
         collected[peer] = {}
 
@@ -45,6 +46,8 @@ def storeData(peer, collected, new):
             collected[peer][i].extend(new[i])
         else:
             collected[peer][i] = new[i]
+        for data in new[i]:
+            insertOtherData(deviceAddress, peer, i, data['data'], data['timestamp'])
     return collected        
         
 

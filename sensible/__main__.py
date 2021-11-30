@@ -20,6 +20,8 @@ def main() -> None:
         basePort = 8000
         numNodes = 3
         # peers = [("localhost", 8000), ("localhost", 8001), ("timeout.org", 8001)]
+        peers = [("localhost", 8000), ("localhost", 8001), ("localhost", 8002)]
+        deviceAddresses = list(map(lambda p: f'http://{p[0]}:{p[1]}', peers))
         peers1 = [("localhost", 8001), ("localhost", 8002)]
         peers2 = [("localhost", 8000), ("localhost", 8002)]
         peers3 = [("localhost", 8000), ("localhost", 8001)]
@@ -31,6 +33,7 @@ def main() -> None:
             devicePort = basePort + n
             i = (n*3)
             deviceConfig = createConfig(devicePort,
+                                        deviceAddresses[n],
                                         addresses[n],
                                         [virtual_sensors[i], virtual_sensors[i+1], virtual_sensors[i+2]])
             deviceState = runNode(deviceConfig)
@@ -44,6 +47,7 @@ def main() -> None:
         pi26 = toAddress(("rasp-026.berry.scss.tcd.ie", port))
         
         if (args.mode == "pi25"):
+            deviceAddress = pi25
             peers = [pi26]
             sensors = [virtual_sensors[0],
                        virtual_sensors[1],
@@ -51,10 +55,11 @@ def main() -> None:
                        virtual_sensors[2]
                        ]
         elif (args.mode == "pi26"):
+            deviceAddress = pi26
             peers = [pi25]
             sensors = [virtual_sensors[3], virtual_sensors[4], virtual_sensors[5]]
             
-        deviceConfig = createConfig(port, peers, sensors)
+        deviceConfig = createConfig(port, deviceAddress, peers, sensors)
         deviceState = runNode(deviceConfig)
         virtualDevices[port] = { "config": deviceConfig,
                                  "state": deviceState }

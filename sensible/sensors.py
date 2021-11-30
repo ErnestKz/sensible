@@ -1,27 +1,29 @@
 import threading
 import random
 import time
+from sensible.database import insertData
 
-def runSensors(lock, data, sensor_procedures, **kwargs):
+def runSensors(lock, data, deviceAddress, sensor_procedures, **kwargs):
     for sensor_procedure in sensor_procedures:
-        threading.Thread(target=sensor_procedure, args=(lock, data)).start()
+        threading.Thread(target=sensor_procedure, args=(lock, data, deviceAddress)).start()
 
 def create_virtual_sensor(sleep_time, sensor_name, run_sampler):
-    def run_virutal_sensor(lock, data):
+    def run_virutal_sensor(lock, data, deviceAddress):
         while True:
             sampled_data = run_sampler()
+            timeStamp = time.time()
 
             temp_dic = {}
             temp_dic['data'] = sampled_data
-            temp_dic['timestamp'] = time.time()
+            temp_dic['timestamp'] = timeStamp
 
             lock.acquire()
             if sensor_name in data.keys():
                 data[sensor_name].append(temp_dic)
             else:
                 data[sensor_name] = [temp_dic]
+            insertData(deviceAddress, sensor_name, sampled_data, timeStamp)
             lock.release()
-
             time.sleep(sleep_time)
     return run_virutal_sensor
 
