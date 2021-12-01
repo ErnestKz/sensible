@@ -8,7 +8,7 @@ def removePunctuation(text):
 
 def createDatabase(deviceAddress, **kwargs):
     databese = 'data/' + removePunctuation(deviceAddress) + '.db'
-    print(databese)
+    # print(databese)
     conn = sqlite3.connect(databese)
     c = conn.cursor()
     c.execute('''CREATE TABLE if not exists SELFDATA
@@ -42,3 +42,21 @@ def insertOtherData(deviceAddress, address, sensor, data, timeStamp, **kwargs):
     c.execute("INSERT INTO OTHERDATA(ADDRESS,SENSOR,DATA,TIMESTAMP) VALUES (?,?,?,?)", (address, sensor, str(data), timeStamp))
     conn.commit()
     conn.close()
+
+def selectDataAll(deviceAddress, **kwarg):
+    databese = 'data/' + removePunctuation(deviceAddress) + '.db'
+    conn = sqlite3.connect(databese)
+    c = conn.cursor()
+    result = c.execute("SELECT * from SELFDATA ORDER BY SENSOR").fetchall()
+    conn.commit()
+    conn.close()
+    return result
+
+def selectOtherDataAll(deviceAddress, **kwarg):
+    databese = 'data/' + removePunctuation(deviceAddress) + '.db'
+    conn = sqlite3.connect(databese)
+    c = conn.cursor()
+    result = c.execute("SELECT * from OTHERDATA ORDER BY ADDRESS,SENSOR").fetchall()
+    conn.commit()
+    conn.close()
+    return result

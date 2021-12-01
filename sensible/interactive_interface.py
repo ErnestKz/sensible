@@ -2,6 +2,7 @@ import os
 import time
 import threading
 from pprint import pprint
+from sensible.database import selectDataAll, selectOtherDataAll
 
 def runBaseInterface(virtualDevices):
     devicesString = "Virtual devices running on ports: " + str(list(virtualDevices.keys()))
@@ -22,20 +23,25 @@ def runBaseInterface(virtualDevices):
         if "devices" == i:
             print(devicesString)
 
-def getInterface(lock, data, otherData, clientLog, serverLog, port, **kwargs):
+def getInterface(lock, data, otherData, clientLog, serverLog, port, deviceAddress, **kwargs):
     def runInterface():
         while True:
+            databaseData = selectDataAll(deviceAddress)
+            databaseOtherData = selectOtherDataAll(deviceAddress)
             i = input(f"(DEVICE:{port}) >> ")
             if i == "clear":
                 os.system('clear')
             if i == "all":
-                displayStats(data, otherData, clientLog, serverLog)
+                # displayStats(data, otherData, clientLog, serverLog)
+                displayStats(databaseData, databaseOtherData, clientLog, serverLog)
             if i == "received_data":
-                pprint(otherData)
+                # pprint(otherData)
+                pprint(databaseOtherData)
             if i == "received_summary":
                 createSummaryReceivedData(otherData)
             if i == "sensed_data":
-                pprint(data)
+                # pprint(data)
+                pprint(databaseData)
             if i == "sensed_summary":
                 createSummarySensedData(data)
             if i == "exit":
