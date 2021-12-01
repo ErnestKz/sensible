@@ -60,3 +60,21 @@ def selectOtherDataAll(deviceAddress, **kwarg):
     conn.commit()
     conn.close()
     return result
+
+def selectDataSummary(deviceAddress, **kwarg):
+    databese = 'data/' + removePunctuation(deviceAddress) + '.db'
+    conn = sqlite3.connect(databese)
+    c = conn.cursor()
+    result = c.execute("SELECT SENSOR, count(*) AS DataVolume from SELFDATA GROUP BY SENSOR").fetchall()
+    conn.commit()
+    conn.close()
+    return result
+
+def selectOtherDataSummary(deviceAddress, **kwarg):
+    databese = 'data/' + removePunctuation(deviceAddress) + '.db'
+    conn = sqlite3.connect(databese)
+    c = conn.cursor()
+    result = c.execute("SELECT ADDRESS, SENSOR, count(*) AS DataVolume from OTHERDATA GROUP BY ADDRESS,SENSOR ORDER BY ADDRESS").fetchall()
+    conn.commit()
+    conn.close()
+    return result
