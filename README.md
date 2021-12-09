@@ -11,7 +11,12 @@ The main configurations available for demo are:
 ### Multiple Nodes on Single Machine: The Interactive Shell
 The command:  
 ```python3 -m sensible virtual```  
-Will start up 3 nodes on the local machine, these nodes will be communicating with each other.
+Will start up 3 nodes on the local machine, these nodes will be communicating with each other.  
+These nodes will be listening on port 8000, 8001, 8002, as printed by the terminal.  
+Typing ```device 8000``` will attatch you to the device listening on port 8000.  
+From here you can enter "Device-Level" commands ducumented [here](### Device-Level Shell).  
+For example `received_summary` is of the Device-Level commands.
+
 ### Single Node: Communication Across Network
 For the demo, communication across 2 pis is configured.
 Once the code is installed on both of the pis.
