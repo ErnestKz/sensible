@@ -32,7 +32,9 @@ On one Pi,
 is run, and on the other,
 ```python3 -m sensible pi26```  
 
-Communication can be observed across the network between the Pis by using the shell.
+Communication can be observed across the network between the Pis by using the shell.  
+
+In this configuration, the Pis addresses are predefined within the [code](sensible/__main__.py), whereas in a full system, the devices would scan a range of IP's and ports.
 ## Interactive Shell Commands
 ### Top-Level Shell
 When you first enter the shell, the shell prompt will look
