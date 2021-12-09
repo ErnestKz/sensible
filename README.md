@@ -1,5 +1,9 @@
 # sensible
 [Project Report](./Report.pdf)
+Ernests - Coding  
+Wanying - Coding  
+Kaaviya - Management, Piazza Lead, Report  
+Francis - Research, Report  
 
 ## Install
 Requires ```python``` and ```make```.  
