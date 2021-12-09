@@ -1,5 +1,5 @@
 # sensible
-<overall description>
+Overall description goes here.
 [Project Report](./Report.pdf)
 ## Instructions
 The main configurations available for demo are:
