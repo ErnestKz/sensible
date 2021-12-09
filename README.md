@@ -9,12 +9,11 @@ The main configurations available for demo are:
 - To run the program as a single node intended to communicate across the network. This config demonstrates the ability for nodes (in this case Raspberry Pis) to communicate across a network.
 
 ### Multiple Nodes on Single Machine: The Interactive Shell
-The command:  
 ```python3 -m sensible virtual```  
-Will start up 3 nodes on the local machine, these nodes will be communicating with each other.  
+This command will start up 3 nodes on the local machine, these nodes will be communicating with each other.  
 These nodes will be listening on port 8000, 8001, 8002, as printed by the terminal.  
 Typing ```device 8000``` will attatch you to the device listening on port 8000.  
-From here you can enter "Device-Level" commands ducumented [here](### Device-Level Shell).  
+From here you can enter "Device-Level" commands ducumented [here](#device-level-shell).  
 For example `received_summary` is of the Device-Level commands.
 
 ### Single Node: Communication Across Network
