@@ -25,13 +25,14 @@ For example `received_summary` is one of the Device-Level commands and it will p
 Typing `exit` will put you back on the [Top-Level shell](#top-level-shell) and from there you can type `devices` to see the available devices, and then `devices <number>` to attatch to different device shell.
 
 ### Single Node: Communication Across Network
-For the demo, communication across 2 pis is configured.
-Once the code is installed on both of the pis.
-On one pi, 
+For the demo, communication across 2 Pis is configured.
+Once the code is installed on both of the Pis,  
+On one Pi, 
 ```python3 -m sensible pi25```
 is run, and on the other,
-```python3 -m sensible pi26```
-Communication can be observed across the network between the pis by using the shell.
+```python3 -m sensible pi26```  
+
+Communication can be observed across the network between the Pis by using the shell.
 ## Interactive Shell Commands
 ### Top-Level Shell
 When you first enter the shell, the shell prompt will look
