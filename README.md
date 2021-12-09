@@ -10,15 +10,15 @@ The main configurations available for demo are:
 
 ### Multiple Nodes on Single Machine: The Interactive Shell
 The command:  
-```python -m sensible virtual```
-
+```python3 -m sensible virtual```  
+Will start up 3 nodes on the local machine, these nodes will be communicating with each other.
 ### Single Node: Communication Across Network
 For the demo, communication across 2 pis is configured.
 Once the code is installed on both of the pis.
 On one pi, 
-```python -m sensible pi25```
+```python3 -m sensible pi25```
 is run, and on the other,
-```python -m sensible pi26```
+```python3 -m sensible pi26```
 Communication can be observed across the network between the pis by using the shell.
 ## Interactive Shell Commands
 ### Top-Level Shell
