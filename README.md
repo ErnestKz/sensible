@@ -2,7 +2,9 @@
 [Project Report](./Report.pdf)
 
 ## Install
-
+Requires ```python``` and ```make```.
+```make virtualenv```  
+```source .venv/bin/activate```  
 ## Instructions
 The main configurations available for demo are:
 - To run this program as multiple nodes on the same machine. This config aims to demonstrate interactive shell and the ability to inspect and operate on the data that a node has received from other nodes.
@@ -10,11 +12,14 @@ The main configurations available for demo are:
 
 ### Multiple Nodes on Single Machine: The Interactive Shell
 ```python3 -m sensible virtual```  
-This command will start up 3 nodes on the local machine, these nodes will be communicating with each other.  
-These nodes will be listening on port 8000, 8001, 8002, as printed by the terminal.  
+   
+This command will start up 3 nodes on the local machine, these nodes will be communicating with each other. These nodes will be listening on port 8000, 8001, 8002, as printed by the terminal.  
+   
 Typing ```device 8000``` will attatch you to the device listening on port 8000.  
+
 From here you can enter "Device-Level" commands ducumented [here](#device-level-shell).  
-For example `received_summary` is one of the Device-Level commands and it will print a summary of the received sensor data.
+For example `received_summary` is one of the Device-Level commands and it will print a summary of the received sensor data.   
+
 Typing `exit` will put you back on the [Top-Level shell](#top-level-shell) and from there you can type `devices` to see the available devices, and then `devices <number>` to attatch to different device shell.
 
 ### Single Node: Communication Across Network
