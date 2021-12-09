@@ -9,20 +9,22 @@ The main configurations available for demo are:
 - To run the program as a single node intended to communicate across the network. This config demonstrates the ability for nodes (in this case Raspberry Pis) to communicate across a network.
 
 ### Multiple Nodes on Single Machine: The Interactive Shell
+The command:  
 ```python -m sensible virtual```
+
 ### Single Node: Communication Across Network
-For the demo, communication across 2 pi's is configured.
-Once the code is installed on both of the pi's
+For the demo, communication across 2 pis is configured.
+Once the code is installed on both of the pis.
 On one pi, 
 ```python -m sensible pi25```
 is run, and on the other,
 ```python -m sensible pi26```
-Communication can be observed across the network between the pi's by using the shell.
+Communication can be observed across the network between the pis by using the shell.
 ## Interactive Shell Commands
 ### Top-Level Shell
 When you first enter the shell, the shell prompt will look
 something like:
-```(BASE) >> ```
+```(BASE) >> ```__
 This indicates that you are at the "Top-Level" of the shell.  
 The commands available in this shell are:
 - `device <number>` Where `<number>` is the port of the device you want to attatch to.
