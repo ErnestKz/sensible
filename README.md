@@ -5,7 +5,8 @@
 Requires ```python``` and ```make```.  
 ```sh
 make virtualenv
-source .venv/bin/activate```  
+source .venv/bin/activate
+```
 ## Instructions
 The main configurations available for demo are:
 - To run this program as multiple nodes on the same machine. This config aims to demonstrate interactive shell and the ability to inspect and operate on the data that a node has received from other nodes.
