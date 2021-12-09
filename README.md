@@ -14,7 +14,8 @@ This command will start up 3 nodes on the local machine, these nodes will be com
 These nodes will be listening on port 8000, 8001, 8002, as printed by the terminal.  
 Typing ```device 8000``` will attatch you to the device listening on port 8000.  
 From here you can enter "Device-Level" commands ducumented [here](#device-level-shell).  
-For example `received_summary` is of the Device-Level commands.
+For example `received_summary` is one of the Device-Level commands and it will print a summary of the received sensor data.
+Typing `exit` will put you back on the [Top-Level shell](#top-level-shell) and from there you can type `devices` to see the available devices, and then `devices <number>` to attatch to different device shell.
 
 ### Single Node: Communication Across Network
 For the demo, communication across 2 pis is configured.
