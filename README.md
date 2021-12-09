@@ -24,7 +24,7 @@ Communication can be observed across the network between the pis by using the sh
 ### Top-Level Shell
 When you first enter the shell, the shell prompt will look
 something like:
-```(BASE) >> ```__
+```(BASE) >> ```  
 This indicates that you are at the "Top-Level" of the shell.  
 The commands available in this shell are:
 - `device <number>` Where `<number>` is the port of the device you want to attatch to.
