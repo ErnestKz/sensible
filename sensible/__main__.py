@@ -6,8 +6,6 @@ from sensible.interactive_interface import runBaseInterface
 from sensible.node import createConfig
 from sensible.sensors import virtual_sensors
 
-from sensible.real_sensor import real_temp_sensor
-
 def main() -> None: 
     parser = argparse.ArgumentParser()
     parser.add_argument("mode", type=str)
