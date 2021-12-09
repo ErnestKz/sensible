@@ -1,3 +1,5 @@
+# Author: Wanying
+
 import random
 import http.server as http
 import json

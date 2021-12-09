@@ -1,3 +1,5 @@
+# Author: Ernest and Wanying
+
 import os
 import time
 import threading

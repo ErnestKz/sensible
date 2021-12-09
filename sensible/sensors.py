@@ -1,3 +1,5 @@
+# Author: Ernest and Wanying
+
 import threading
 import random
 import time

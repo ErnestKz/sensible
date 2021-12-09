@@ -1,3 +1,5 @@
+# Author: Ernests
+
 import requests
 import time
 import json
